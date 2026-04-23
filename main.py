@@ -2,10 +2,21 @@ import cv2
 import numpy as np
 import base64
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware  # Added for browser permission
 from ultralytics import YOLO
 import io
 
 app = FastAPI()
+
+# --- CORS PERMISSION BLOCK ---
+# This allows your local website to talk to your Railway server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 1. LOAD MODELS
 # Ensure these filenames match what you uploaded to your GitHub repo
